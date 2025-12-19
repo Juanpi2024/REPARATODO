@@ -15,13 +15,15 @@ function doGet(e) {
     fondo: sheet.getRange("F5").getValue().toString(),
     slogan: sheet.getRange("F6").getValue().toString(),
     descripcion: sheet.getRange("F7").getValue().toString(),
+    descripcion: sheet.getRange("F7").getValue().toString(),
+    testimonios: sheet.getRange("H2:H6").getValues().flat().filter(String),
     scriptURL: ScriptApp.getService().getUrl()
   };
 
   if (e && e.parameter.datos) {
     const data = sheet.getDataRange().getValues().slice(1)
       .filter(f => f[3] === "Publicar")
-      .map(f => ({ textoProfesional: f[2] }));
+      .map(f => ({ imagen: f[1], textoProfesional: f[2] }));
     return ContentService.createTextOutput(JSON.stringify(data)).setMimeType(ContentService.MimeType.JSON);
   }
 
@@ -64,7 +66,7 @@ function doPost(e) {
 function llamarGemini(idea) {
   const API_KEY = PropertiesService.getScriptProperties().getProperty('GEMINI_KEY');
   const url = `https://generativelanguage.googleapis.com/v1beta/models/${MODELO}:generateContent?key=${API_KEY}`;
-  const prompt = `Actúa como experto en marketing. Crea 3 textos cortos y atractivos. Idea: "${idea}". Responde ÚNICAMENTE un JSON: {"opciones": ["texto profesional 1", "texto profesional 2", "texto profesional 3"]}`;
+  const prompt = `Actúa como experto en Copywriting. Usa el framework AIDA para vender la siguiente idea: "${idea}". Genera 3 opciones distintas. Cada opción debe seguir estrictamente: 1. Atención (Beneficio emocional/Gancho). 2. Interés (Dato/Autoridad). 3. Deseo (Resultado final). 4. Acción (CTA a WhatsApp). Responde ÚNICAMENTE un JSON válido: {"opciones": ["Texto AIDA 1", "Texto AIDA 2", "Texto AIDA 3"]}`;
   const payload = { "contents": [{ "parts": [{ "text": prompt }] }], "generationConfig": { "response_mime_type": "application/json" } };
   const res = UrlFetchApp.fetch(url, { "method": "post", "contentType": "application/json", "payload": JSON.stringify(payload), "muteHttpExceptions": true });
   const json = JSON.parse(res.getContentText());

@@ -1,0 +1,39 @@
+# Carpetas locales especificas del proyecto
+dinor/
+
+# Dependencias de Node.js
+node_modules/
+npm-debug.log
+yarn.lock
+yarn-error.log
+package-lock.json
+
+# Archivos de configuracion de Apps Script y Google
+.clasp.json
+.google/
+creds.json
+
+# Archivos del sistema operativo (Windows)
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+
+# Archivos del sistema operativo (Mac)
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+
+# Archivos de logs y temporales
+*.log
+*.tmp
+*.temp
+
+# Archivos de editores de codigo
+.vscode/
+*.code-workspace
+.idea/
+*.swp
+*.swo
+*~

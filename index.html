@@ -1,29 +1,108 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?= nombre ?></title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>
+        <?= nombre ?>
+    </title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <style>
-        body { font-family: sans-serif; background-color: #FDFCFB; }
-        .hero-bg { background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('<?= fondo ?>'); background-size: cover; background-position: center; }
-        .card-premium { background: white; border-radius: 1.5rem; padding: 2.5rem; border: 1px solid #f1f1f1; transition: 0.3s ease; }
+        body {
+            font-family: sans-serif;
+            background-color: #FDFCFB;
+        }
+
+        .hero-bg {
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.7)), url('<?= fondo ?>');
+            background-size: cover;
+            background-position: center;
+        }
+
+        .card-premium {
+            background: white;
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            border: 1px solid #f1f1f1;
+            transition: 0.3s ease;
+        }
     </style>
 </head>
+
 <body class="text-stone-800">
-    <header class="hero-bg h-[85vh] flex flex-col text-white">
-        <nav class="p-8 flex items-center gap-4">
-            <img src="<?= logo ?>" class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-xl">
-            <h1 class="font-bold uppercase tracking-widest text-sm"><?= nombre ?></h1>
+    <header class="hero-bg min-h-screen flex flex-col text-white relative">
+        <div class="absolute inset-0 bg-black/40"></div> <!-- Overlay para legibilidad -->
+        <nav class="relative z-10 p-6 flex justify-center md:justify-start items-center gap-3">
+            <img src="<?= logo ?>" class="w-10 h-10 rounded-full object-cover border-2 border-white shadow-md">
+            <h1 class="font-bold uppercase tracking-widest text-xs">
+                <?= nombre ?>
+            </h1>
         </nav>
-        <div class="flex-1 flex flex-col justify-center px-8 md:px-32 max-w-6xl">
-            <h2 class="text-6xl md:text-8xl font-black mb-8 leading-tight"><?= slogan ?></h2>
-            <a href="https://api.whatsapp.com/send?phone=<?= whatsapp.toString().replace(/\D/g,'') ?>" class="bg-white text-black px-12 py-5 rounded-full font-bold shadow-2xl w-max flex items-center gap-3">
-                <i class="fab fa-whatsapp text-2xl text-green-500"></i> CONTACTAR
+        <div
+            class="relative z-10 flex-1 flex flex-col justify-center items-center md:items-start px-6 md:px-32 max-w-5xl text-center md:text-left">
+            <!-- Franja 1: Propuesta de Valor -->
+            <h2 class="text-5xl md:text-7xl font-black mb-6 leading-tight drop-shadow-xl">
+                <?= slogan ?>
+            </h2>
+
+            <!-- Franja 2: Prueba Social -->
+            <div
+                class="flex items-center gap-4 mb-8 bg-white/10 backdrop-blur-md p-2 pl-3 pr-5 rounded-full border border-white/10">
+                <div class="flex -space-x-2">
+                    <div
+                        class="w-8 h-8 rounded-full bg-white flex items-center justify-center text-[10px] text-black font-bold">
+                        ★</div>
+                    <div
+                        class="w-8 h-8 rounded-full bg-stone-100 flex items-center justify-center text-[10px] text-black font-bold">
+                        ★</div>
+                    <div
+                        class="w-8 h-8 rounded-full bg-stone-200 flex items-center justify-center text-[10px] text-black font-bold">
+                        ★</div>
+                </div>
+                <p class="text-xs font-semibold tracking-wide">+100 Clientes Felices</p>
+            </div>
+
+            <!-- Franja Vertical: Acción -->
+            <a href="https://api.whatsapp.com/send?phone=<?= whatsapp.toString().replace(/\D/g,'') ?>"
+                class="bg-[#25D366] hover:bg-[#20bd5a] text-white px-8 py-4 rounded-full font-bold shadow-[0_0_20px_rgba(37,211,102,0.5)] flex items-center gap-3 transform hover:scale-105 duration-300 animate-pulse">
+                <i class="fab fa-whatsapp text-3xl"></i>
+                <div class="text-left">
+                    <p class="text-[10px] uppercase font-bold opacity-80 leading-none">Hablar con un experto</p>
+                    <p class="text-lg leading-none">CONTACTAR AHORA</p>
+                </div>
             </a>
         </div>
     </header>
+
+    <!-- Sección de Testimonios (Social Proof) -->
+    <section class="bg-stone-100 py-16 px-8" id="testimonios-section">
+        <div class="max-w-6xl mx-auto">
+            <h3 class="text-center font-bold text-2xl mb-10 text-stone-600 uppercase tracking-widest">Lo que dicen
+                nuestros clientes</h3>
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8" id="lista-testimonios">
+                <!-- Se llenará con JS -->
+                <? for (var i = 0; i < testimonios.length; i++) { ?>
+                <div class="bg-white p-6 rounded-xl shadow-md border border-stone-100">
+                    <div class="flex text-yellow-400 mb-4 text-xs">
+                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i
+                            class="fas fa-star"></i><i class="fas fa-star"></i>
+                    </div>
+                    <p class="text-stone-600 italic">"
+                        <?= testimonios[i] ?>".
+                    </p>
+                    <p class="text-stone-900 font-bold mt-4 text-sm">- Cliente Verificado</p>
+                </div>
+                <? } ?>
+            </div>
+            <!-- Fallback por si no hay datos en Excel aún -->
+            <div id="fallback-testimonios" class="hidden text-center text-stone-500 italic">
+                <p>Miles de personas confían en nosotros. Únete hoy.</p>
+            </div>
+        </div>
+    </section>
+
     <main class="max-w-7xl mx-auto py-24 px-8">
         <div id="feed" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"></div>
     </main>
@@ -34,12 +113,17 @@
             const feed = document.getElementById('feed');
             const colores = ['#FFE8E0', '#E0E7FF', '#F3E8FF', '#ECFDF5'];
             data.reverse().forEach((i, idx) => {
-                feed.innerHTML += `<div class="card-premium" style="background-color: ${colores[idx % 4]}">
-                    <p class="text-2xl font-bold text-stone-900 leading-snug">${i.textoProfesional}</p>
+                const img = i.imagen ? `<img src="${i.imagen}" loading="lazy" class="w-full h-48 object-cover rounded-xl mb-4 shadow-sm">` : '';
+                feed.innerHTML += `<div class="card-premium h-full flex flex-col justify-between" style="background-color: ${colores[idx % 4]}">
+                    <div>
+                        ${img}
+                        <p class="text-xl md:text-2xl font-bold text-stone-900 leading-snug">${i.textoProfesional}</p>
+                    </div>
                 </div>`;
             });
         }
         window.onload = load;
     </script>
 </body>
+
 </html>
