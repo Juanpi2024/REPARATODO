@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?= nombre ?></title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body { font-family: sans-serif; background-color: #FDFCFB; }
+        .hero-bg { background: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.7)), url('<?= fondo ?>'); background-size: cover; background-position: center; }
+        .card-premium { background: white; border-radius: 1.5rem; padding: 2.5rem; border: 1px solid #f1f1f1; transition: 0.3s ease; }
+    </style>
+</head>
+<body class="text-stone-800">
+    <header class="hero-bg h-[85vh] flex flex-col text-white">
+        <nav class="p-8 flex items-center gap-4">
+            <img src="<?= logo ?>" class="w-12 h-12 rounded-full object-cover border-2 border-white shadow-xl">
+            <h1 class="font-bold uppercase tracking-widest text-sm"><?= nombre ?></h1>
+        </nav>
+        <div class="flex-1 flex flex-col justify-center px-8 md:px-32 max-w-6xl">
+            <h2 class="text-6xl md:text-8xl font-black mb-8 leading-tight"><?= slogan ?></h2>
+            <a href="https://api.whatsapp.com/send?phone=<?= whatsapp.toString().replace(/\D/g,'') ?>" class="bg-white text-black px-12 py-5 rounded-full font-bold shadow-2xl w-max flex items-center gap-3">
+                <i class="fab fa-whatsapp text-2xl text-green-500"></i> CONTACTAR
+            </a>
+        </div>
+    </header>
+    <main class="max-w-7xl mx-auto py-24 px-8">
+        <div id="feed" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10"></div>
+    </main>
+    <script>
+        async function load() {
+            const res = await fetch("<?= scriptURL ?>?datos=true");
+            const data = await res.json();
+            const feed = document.getElementById('feed');
+            const colores = ['#FFE8E0', '#E0E7FF', '#F3E8FF', '#ECFDF5'];
+            data.reverse().forEach((i, idx) => {
+                feed.innerHTML += `<div class="card-premium" style="background-color: ${colores[idx % 4]}">
+                    <p class="text-2xl font-bold text-stone-900 leading-snug">${i.textoProfesional}</p>
+                </div>`;
+            });
+        }
+        window.onload = load;
+    </script>
+</body>
+</html>
